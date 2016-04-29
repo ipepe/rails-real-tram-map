@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.14.1'
+gem 'rails', '4.1.15'
 
 ### OpenShift Online changes:
 
@@ -26,13 +26,9 @@ group :development, :test do
 end
 
 # Add support for the MySQL
-group :production, :mysql do
-  gem 'mysql2', '~> 0.3.20' #version >= 4.0.0 is not compatible with this rails version
-end
+gem 'mysql2', '~> 0.3.20', :group => :mysql #version >= 4.0.0 is not compatible with this rails version
 
-group :production, :postgresql do
-  gem 'pg'
-end
+gem 'pg', :group => :postgresql
 
 ### / OpenShift changes
 
