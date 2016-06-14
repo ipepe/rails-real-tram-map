@@ -35,6 +35,9 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # assets pipeline
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-sass-official'
+  gem 'rails-assets-font-awesome'
+  gem 'rails-assets-leaflet'
+  gem 'rails-assets-Leaflet.awesome-markers'
 end
 
 # project related gems

@@ -15,8 +15,10 @@ html lang=I18n.locale
     == javascript_include_tag 'application', 'data-turbolinks-track' => true
   body
     == include_gon
-    == render 'layouts/navbar'
+    /== render 'layouts/navbar'
     == flash_messages
-    .container
-      == yield
+    /.container
+    == yield
+
+
 
