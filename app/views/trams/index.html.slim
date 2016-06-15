@@ -22,11 +22,11 @@ coffee:
       maxBounds: L.latLngBounds(southWest, northEast)
     }
     update_trams = (trams_array) ->
-      # delete not tracked, old trams...
-      new_tram_ids = trams_array.map((tram)-> tram.id)
-      Object.keys(tram_markers).forEach (tram_id) ->
-        if new_tram_ids.indexOf(tram_id) == -1
-          window.map.removeLayer(tram_markers[tram_id])
+      ## delete not tracked, old trams...
+      #new_tram_ids = trams_array.map((tram)-> tram.id)
+      #Object.keys(tram_markers).forEach (tram_id) ->
+      #  if new_tram_ids.indexOf(tram_id) == -1
+      #    window.map.removeLayer(tram_markers[tram_id])
 
       # update or create trams
       trams_array.forEach (tram) ->
@@ -35,17 +35,16 @@ coffee:
           if tram.latitude != old_tram.Lat || tram.longitude != old_tram.Lon
             tram_markers[tram.id].moveTo([tram.Lat, tram.Lon], 11000)
         else
-          tram_markers[tram.id] = (L.Marker.movingMarker([
-            [tram.latitude, tram.longitude],
-            [tram.previous_latitude, tram.previous_longitude]
-          ], [10000], { icon: L.AwesomeMarkers.icon({
-            icon: 'train',
-            markerColor: awesome_markers_colors[parseInt(tram.line) % (awesome_markers_colors.length - 1)]
+          tram_markers[tram.id] = (L.Marker.movingMarker([[tram.previous_latitude, tram.previous_longitude]], [], {
+            icon: L.AwesomeMarkers.icon({
+              icon: 'train',
+              markerColor: awesome_markers_colors[parseInt(tram.line) % (awesome_markers_colors.length - 1)]
             })
           }))
           popupHtml = "Line:"+tram.line
           popupHtml += "<br>Brigade:"+tram.brigade
           tram_markers[tram.id].addTo(window.map).bindPopup(popupHtml)
+          tram_markers[tram.id].moveTo([tram.latitude, tram.longitude], 11000)
 
     update_trams(gon.trams)
     setInterval((->

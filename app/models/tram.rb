@@ -6,8 +6,8 @@ class Tram < ActiveRecord::Base
     uri = URI(API_URL+ENV['WAW_API_KEY'])
     JSON.parse(Net::HTTP.get(uri))['result'].each do |tram_data|
       tram = Tram.find_or_create_by(
-          line: tram_data['FirstLine'].gsub(/\s+/, "").to_i,
-          brigade: tram_data['Brigade'].gsub(/\s+/, "").to_i
+          line: tram_data['FirstLine'].gsub(/\s+/, "").to_i.to_s,
+          brigade: tram_data['Brigade'].gsub(/\s+/, "").to_i.to_s
       )
       tram.latitude = tram_data['Lat']
       tram.longitude = tram_data['Lon']
