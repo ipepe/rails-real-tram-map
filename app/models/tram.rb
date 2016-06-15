@@ -38,12 +38,12 @@ class Tram < ActiveRecord::Base
   end
 
   def latitude=(value)
+    self.previous_latitude= self.latitude if self.latitude != self.previous_latitude
     super
-    self.previous_latitude=value
   end
 
   def longitude=(value)
+    self.previous_longitude=self.longitude if self.longitude != self.previous_longitude
     super
-    self.previous_longitude=value
   end
 end
