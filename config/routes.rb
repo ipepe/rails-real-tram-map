@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  root 'example#index'
+  resources :trams, only: [:index]
 end

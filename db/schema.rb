@@ -11,6 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20160614224310) do
+
+  create_table "trams", force: true do |t|
+    t.float    "latitude"
+    t.float    "longitude"
+    t.float    "previous_latitude"
+    t.float    "previous_longitude"
+    t.string   "line"
+    t.string   "brigade"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
