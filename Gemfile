@@ -53,10 +53,10 @@ gem 'rufus-scheduler'
 
 gem 'gon'
 
-#devise
-gem 'devise'
-gem 'omniauth'
-gem 'omniauth-google-oauth2'
+# #devise
+# gem 'devise'
+# gem 'omniauth'
+# gem 'omniauth-google-oauth2'
 
 gem 'yaml_db'
 #rake db:data:dump   ->   Dump contents of Rails database to db/data.yml
