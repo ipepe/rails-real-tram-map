@@ -1,6 +1,6 @@
-unless defined?(Rails::Console) || File.split($0).last == 'rake'
-  Rails.application.scheduler.every '4s' do
-    puts "Scheduler running task"
+unless defined?(Rails::Console) || File.split($0).include?('rake')
+  Rails.application.scheduler.every '14s' do
+    puts "#{Time.now}@Refreshing tram data"
     Tram.refresh_data
   end
 end
