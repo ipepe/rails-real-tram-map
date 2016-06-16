@@ -3,6 +3,7 @@
   .cube2
 #map
 coffee:
+  ANIMATION_TIME = 6000
   window.L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa'
   awesome_markers_colors = ['red', 'darkred', 'orange', 'green', 'darkgreen', 'blue', 'purple', 'darkpuple', 'cadetblue']
   window.tram_markers = {}
@@ -33,7 +34,7 @@ coffee:
         if tram_markers[tram.id]
           old_tram = tram_markers[tram.id]
           if tram.latitude != old_tram.Lat || tram.longitude != old_tram.Lon
-            tram_markers[tram.id].moveTo([tram.latitude, tram.longitude], 16000)
+            tram_markers[tram.id].moveTo([tram.latitude, tram.longitude], ANIMATION_TIME)
         else
           tram_markers[tram.id] = (L.Marker.movingMarker([[tram.previous_latitude, tram.previous_longitude]], [], {
             icon: L.AwesomeMarkers.icon({
@@ -44,11 +45,11 @@ coffee:
           popupHtml = "Line:"+tram.line
           popupHtml += "<br>Brigade:"+tram.brigade
           tram_markers[tram.id].addTo(window.map).bindPopup(popupHtml)
-          tram_markers[tram.id].moveTo([tram.latitude, tram.longitude], 16000)
+          tram_markers[tram.id].moveTo([tram.latitude, tram.longitude], ANIMATION_TIME)
 
     update_trams(gon.trams)
     setInterval((->
       $.ajax(url: '/trams.json').done (trams) ->
         update_trams(trams.result)
-    ), 15000)
+    ), ANIMATION_TIME-1000)
 

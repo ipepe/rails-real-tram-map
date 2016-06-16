@@ -3,4 +3,5 @@
 //= require turbolinks
 //= require leaflet
 //= require Leaflet.awesome-markers
+//= require Leaflet.EasyButton
 //= require_tree .

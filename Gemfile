@@ -38,6 +38,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-font-awesome'
   gem 'rails-assets-leaflet'
   gem 'rails-assets-Leaflet.awesome-markers'
+  gem 'rails-assets-Leaflet.EasyButton'
 end
 
 # project related gems
