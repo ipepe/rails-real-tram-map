@@ -37,7 +37,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-sass-official'
   gem 'rails-assets-font-awesome'
   gem 'rails-assets-leaflet'
-  gem 'rails-assets-Leaflet.awesome-markers'
+  gem 'rails-assets-Leaflet.extra-markers'
   gem 'rails-assets-Leaflet.EasyButton'
 end
 
@@ -51,7 +51,7 @@ gem 'non-stupid-digest-assets'
 gem 'quiet_assets'
 
 gem 'rufus-scheduler'
-
+gem 'geocoder'
 gem 'gon'
 
 # #devise

@@ -1,0 +1,117 @@
+.spinner
+  .cube1
+  .cube2
+#map
+coffee:
+  debounce = (func, threshold, execAsap) ->
+    timeout = null
+    (args...) ->
+      obj = this
+      delayed = ->
+        func.apply(obj, args) unless execAsap
+        timeout = null
+      if timeout
+        clearTimeout(timeout)
+      else if (execAsap)
+        func.apply(obj, args)
+      timeout = setTimeout delayed, threshold || 100
+  ANIMATION_TIME = 10000
+  awesome_markers_colors = ['red', 'orange-dark', 'orange', 'yellow', 'blue-dark', 'green', 'purple', 'violet', 'pink', 'green-dark', 'green-light', 'white']
+  window.tram_markers = {}
+  window.user_marker = null
+  $().ready ->
+    $('.spinner').hide()
+    tiles = L.tileLayer('/tiles/{z}/{x}/{y}.png', {
+       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://cartodb.com/attributions">CartoDB</a>',
+     })
+    southWest = L.latLng(52.0, 20.7)
+    northEast = L.latLng(52.4, 21.3)
+    window.map = L.map 'map', {
+      layers: tiles,
+      center: [52.23, 21.01],
+      zoom: 13,
+      minZoom: 12,
+      maxZoom: 14,
+      maxBounds: L.latLngBounds(southWest, northEast)
+    }
+
+    window.map.locate({enableHighAccuracy: true, watch: true}).on 'locationfound', (e) =>
+      if window.user_marker
+        window.user_marker.moveTo([e.latitude, e.longitude], ANIMATION_TIME/2)
+        window.user_marker.bindPopup("You are within " + (e.accuracy / 2) + " meters from this point")
+      else
+        window.user_marker = L.Marker.movingMarker([[e.latitude, e.longitude]],[],
+          icon: L.ExtraMarkers.icon({
+            icon: 'fa-user',
+            prefix: 'fa'
+            markerColor: 'cyan'
+          }))
+        window.user_marker.addTo(window.map).
+          bindPopup("You are within " + (e.accuracy / 2) + " meters from this point")
+
+    user_tracking_interval = null
+    L.easyButton(
+      states: [{
+        stateName: 'start-tracking',
+        icon: 'fa-crosshairs',
+        title: 'Track user position',
+        onClick: (btn, map) ->
+          if user_marker
+            user_tracking_interval = setInterval(->
+              window.map.panTo(user_marker.getLatLng())
+            , 500)
+            btn.state('stop-tracking') if user_tracking_interval
+      },{
+        stateName: 'stop-tracking',
+        icon: 'fa-stop',
+        title: 'Stop tracking user position',
+        onClick: (btn, map) ->
+          btn.state('start-tracking');
+          clearInterval(user_tracking_interval)
+      }]
+    ).addTo(window.map)
+
+    update_trams = (trams_array) ->
+      # delete not tracked, old trams...
+      new_tram_ids = trams_array.map((tram)-> tram.id.toString())
+      Object.keys(tram_markers).forEach (tram_id) ->
+        if new_tram_ids.indexOf(tram_id) == -1
+          tram_markers[tram_id].deleted = true
+          window.map.removeLayer(tram_markers[tram_id])
+
+
+      # update or create trams
+      trams_array.forEach (tram) ->
+        if tram_markers[tram.id] && tram_markers[tram.id].deleted != true
+          old_tram = tram_markers[tram.id]
+          tram_markers[tram.id].bindPopup(tram.popup_marker_html)
+          if tram.latitude != old_tram.Lat || tram.longitude != old_tram.Lon
+            if tram.should_animate
+              tram_markers[tram.id].moveTo([tram.latitude, tram.longitude], ANIMATION_TIME)
+            else
+              tram_markers[tram.id].setLatLng([tram.latitude, tram.longitude])
+        else
+          tram_markers[tram.id] = (L.Marker.movingMarker([[tram.previous_latitude, tram.previous_longitude]], [], {
+            icon: L.ExtraMarkers.icon({
+              icon: 'fa-number',
+              prefix: 'fa',
+              number: tram.line.toString(),
+              markerColor: awesome_markers_colors[parseInt(tram.line) % (awesome_markers_colors.length - 1)]
+            })
+          }))
+          tram_markers[tram.id].addTo(window.map).bindPopup(tram.popup_marker_html)
+          tram_markers[tram.id].moveTo([tram.latitude, tram.longitude], ANIMATION_TIME)
+
+    update_trams(gon.trams)
+    reloadTrams = =>
+      center = window.map.getCenter()
+      radius = (window.map.getBounds().getNorthEast().distanceTo(window.map.getBounds().getSouthWest())/2000) + 1.5
+      url = '/api/v1/trams.json?'
+      url = url + "center_latitude=#{center.lat}&center_longitude=#{center.lng}"
+      url = url + "&radius=#{radius}"
+      $.ajax(url: url).done (response) =>
+        update_trams(response.result)
+
+    window.map.on('move', debounce(reloadTrams, 50))
+    setInterval(reloadTrams, ANIMATION_TIME-1000)
+

@@ -1,0 +1,7 @@
+pl:
+  application:
+    title: Tramsy
+  trams:
+    timeline: Rozkład jazdy
+    line: Linia
+    brigade: Brygada

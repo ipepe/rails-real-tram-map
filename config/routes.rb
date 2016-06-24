@@ -1,3 +1,7 @@
 Rails.application.routes.draw do
-  resources :trams, only: [:index]
+  namespace :api do
+    namespace :v1 do
+      resources :trams, only: [:index]
+    end
+  end
 end

@@ -1,6 +1,7 @@
 class Tram < ActiveRecord::Base
-
   API_URL="https://api.um.warszawa.pl/api/action/wsstore_get/?id=c7238cfe-8b1f-4c38-bb4a-de386db7e776&apikey="
+
+  reverse_geocoded_by :latitude, :longitude
 
   def self.refresh_data
     uri = URI(API_URL+ENV['WAW_API_KEY'])
@@ -15,8 +16,9 @@ class Tram < ActiveRecord::Base
     end
   end
 
-  scope :currently_running, -> do
-    where('updated_at > :time_limit', time_limit: Time.now-3.minutes )
+  scope :currently_running, -> (latitude: 52.23, logitude: 21.01, radius: 20, limit: 100) do
+    where('updated_at > :time_limit', time_limit: Time.now-3.minutes ).
+        near([latitude, logitude], radius).limit(limit)
   end
 
   def serialized_hash
@@ -28,13 +30,22 @@ class Tram < ActiveRecord::Base
         previous_longitude: self.previous_longitude,
         should_animate: self.should_animate,
         line: self.line,
-        brigade: self.brigade
+        brigade: self.brigade,
+        popup_marker_html: self.popup_marker_html
     }
+  end
+
+  def popup_marker_html
+    """#{I18n.t('trams.line')}: #{self.line}<br/>#{I18n.t('trams.brigade')}: #{self.brigade}<br/>""" +
+        """<a href=\"http://www.ztm.waw.pl/rozklad_nowy.php?c=182&l=1&q=#{self.line}\">#{I18n.t('trams.timeline')} (http://www.ztm.waw.pl)</a>"""
   end
 
   def should_animate
     #sprawdzic roznice miedzy previous lat/lon do current
-    true
+    Geocoder::Calculations.distance_between(
+        [self.previous_latitude, self.previous_longitude],
+        [self.latitude, self.longitude]
+    ) < 1
   end
 
   def latitude=(value)

@@ -1,6 +1,6 @@
 /*
  *= require leaflet
- *= require Leaflet.awesome-markers
+ *= require Leaflet.extra-markers
  *= require Leaflet.EasyButton
  *= require_tree .
  *= require_self
@@ -14,8 +14,13 @@
 $fa-font-path: "/assets/font-awesome/fonts";
 @import 'font-awesome/font-awesome.scss';
 
-body, #map{
-  height: 100vh; width: 100vw; padding: 0px; margin: 0px;
+body {
+  padding: 0;
+  margin: 0;
+}
+html, body, #map {
+  height: 100%;
+  width: 100%;
 }
 
 .spinner {

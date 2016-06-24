@@ -19,22 +19,25 @@ def download_url(zoom, xtile, ytile, download_path):
 
 	subdomain = random.randint(1, 4)
 
-	url = "http://%d.basemaps.cartocdn.com/dark_all/%d/%d/%d@2x.png" % (subdomain, zoom, xtile, ytile)
+	url = "http://%d.basemaps.cartocdn.com/dark_all/%d/%d/%d.png" % (subdomain, zoom, xtile, ytile)
 	dir_path = "%s/tiles/%d/%d/" % (download_path, zoom, xtile)
 	download_path = "%s/tiles/%d/%d/%d.png" % (download_path, zoom, xtile, ytile)
 
 	if not os.path.exists(dir_path):
 		os.makedirs(dir_path)
 
-	print "downloading %r" % url
-	time.sleep(1)
+	if os.path.exists(download_path):
+		print "already downloaded %r" % url
+	else:
+		print "downloading %r" % url
+		time.sleep(1)
 
-	source = urllib2.urlopen(url)
-	content = source.read()
-	source.close()
-	destination = open(download_path,'wb')
-	destination.write(content)
-	destination.close()
+		source = urllib2.urlopen(url)
+		content = source.read()
+		source.close()
+		destination = open(download_path,'wb')
+		destination.write(content)
+		destination.close()
 
 def main(argv):
 	try:
@@ -42,8 +45,8 @@ def main(argv):
 		west = 20.7
 		north = 52.4
 		east = 21.3
-		min_zoom = 14
-		max_zoom = 14
+		min_zoom = 15
+		max_zoom = 18
 		download_path = "./www/"
 	except:
 		exit(2)
