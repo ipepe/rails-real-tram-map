@@ -7,4 +7,5 @@ Currently for Warsaw. Hosted at trams.ipepe.pl
  * Openstreetmap for map data
  * Urząd Miasta Warszawa for trams data
  * FontAwesome for icons
- * Spinner(?) who?
+ * Leaflet
+ * Tobiasahlin - spinner author
