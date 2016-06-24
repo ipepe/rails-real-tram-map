@@ -16,6 +16,7 @@ coffee:
         func.apply(obj, args)
       timeout = setTimeout delayed, threshold || 100
   ANIMATION_TIME = 10000
+  markers_limit = 30
   awesome_markers_colors = ['red', 'orange-dark', 'orange', 'yellow', 'blue-dark', 'green', 'purple', 'violet', 'pink', 'green-dark', 'green-light', 'white']
   window.tram_markers = {}
   window.user_marker = null
@@ -71,6 +72,34 @@ coffee:
       }]
     ).addTo(window.map)
 
+    L.easyButton(
+      states: [{
+        stateName: 'small-limit',
+        icon: 'fa-expand',
+        title: 'Show more markers',
+        onClick: (btn, map) ->
+          markers_limit = 100
+          window.reloadTrams()
+          btn.state('medium-limit')
+      }, {
+        stateName: 'medium-limit',
+        icon: 'fa-arrows-alt',
+        title: 'Show more markers',
+        onClick: (btn, map) ->
+          markers_limit = 200
+          window.reloadTrams()
+          btn.state('big-limit')
+      }, {
+        stateName: 'big-limit',
+        icon: 'fa-compress',
+        title: 'Show less markers',
+        onClick: (btn, map) ->
+          markers_limit = 30
+          window.reloadTrams()
+          btn.state('small-limit')
+      }]
+    ).addTo(window.map)
+
     update_trams = (trams_array) ->
       # delete not tracked, old trams...
       new_tram_ids = trams_array.map((tram)-> tram.id.toString())
@@ -103,12 +132,13 @@ coffee:
           tram_markers[tram.id].moveTo([tram.latitude, tram.longitude], ANIMATION_TIME)
 
     update_trams(gon.trams)
-    reloadTrams = =>
+    window.reloadTrams = =>
       center = window.map.getCenter()
       radius = (window.map.getBounds().getNorthEast().distanceTo(window.map.getBounds().getSouthWest())/2000) + 1.5
       url = '/api/v1/trams.json?'
       url = url + "center_latitude=#{center.lat}&center_longitude=#{center.lng}"
       url = url + "&radius=#{radius}"
+      url = url + "&limit=#{markers_limit}"
       $.ajax(url: url).done (response) =>
         update_trams(response.result)
 

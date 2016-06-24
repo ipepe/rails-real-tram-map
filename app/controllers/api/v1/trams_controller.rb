@@ -12,6 +12,10 @@ class Api::V1::TramsController < ApplicationController
     end
   end
 
+  def about
+    @services = [:dane_po_warzawsku, :ztm, :leaflet, :openstreetmap, :carto_db, :spinner, :fontawesome]
+  end
+
   private
 
   def sanitize_index_params
@@ -19,7 +23,7 @@ class Api::V1::TramsController < ApplicationController
         latitude: if params['center_latitude'].present? then params['center_latitude'].to_f else 52.23 end,
         logitude: if params['center_longitude'].present? then params['center_longitude'].to_f else 21.01 end,
         radius: if params['radius'].present? then params['radius'].to_f else 30 end,
-        limit: if params['limit'].present? then params['limit'].to_i else 100 end
+        limit: if params['limit'].present? then params['limit'].to_i else 30 end
     }
   end
 end

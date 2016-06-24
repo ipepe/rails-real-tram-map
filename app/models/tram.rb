@@ -37,7 +37,7 @@ class Tram < ActiveRecord::Base
 
   def popup_marker_html
     """#{I18n.t('trams.line')}: #{self.line}<br/>#{I18n.t('trams.brigade')}: #{self.brigade}<br/>""" +
-        """<a href=\"http://www.ztm.waw.pl/rozklad_nowy.php?c=182&l=1&q=#{self.line}\">#{I18n.t('trams.timeline')} (http://www.ztm.waw.pl)</a>"""
+        """<a href=\"http://m.ztm.waw.pl/rozklad_nowy.php?c=182&l=1&q=#{self.line}\">#{I18n.t('trams.timeline')} (http://www.ztm.waw.pl)</a>"""
   end
 
   def should_animate

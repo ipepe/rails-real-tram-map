@@ -7,3 +7,6 @@ en:
     brigade: Brigade
   user:
     your_position: Your position
+  about:
+    title: About
+    subtitle: 'List of used frameworks, libraries and other resources. Heres my thank You to:'

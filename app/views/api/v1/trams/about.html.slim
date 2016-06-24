@@ -1,0 +1,20 @@
+.container-fluid
+  .row
+    .col-md-6.col-md-offset-3
+      h3 = I18n.t('about.title')
+      h5 = I18n.t('about.subtitle')
+  .row
+    .col-md-6.col-md-offset-3
+      table.table-responsive.table-striped
+        thead
+          tr
+            th Name
+            th Logo
+            th Why
+        tbody
+          - @services.each do |service|
+            tr
+              td = service.to_s.humanize
+              td
+                img src="/logos/#{service}.png"
+              td = I18n.t("about.why.#{service}")
