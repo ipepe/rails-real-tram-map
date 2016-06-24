@@ -46,8 +46,8 @@ def main(argv):
 		north = 52.4
 		east = 21.3
 		min_zoom = 15
-		max_zoom = 18
-		download_path = "./www/"
+		max_zoom = 16
+		download_path = "./"
 	except:
 		exit(2)
 

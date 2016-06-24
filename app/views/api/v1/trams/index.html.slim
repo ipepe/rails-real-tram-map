@@ -35,7 +35,7 @@ coffee:
       maxZoom: 14,
       maxBounds: L.latLngBounds(southWest, northEast)
     }
-
+    window.map.locate({enableHighAccuracy: true, setView: true})
     window.map.locate({enableHighAccuracy: true, watch: true}).on 'locationfound', (e) =>
       if window.user_marker
         window.user_marker.moveTo([e.latitude, e.longitude], ANIMATION_TIME/2)
