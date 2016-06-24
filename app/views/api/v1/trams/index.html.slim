@@ -38,7 +38,7 @@ coffee:
     window.map.locate({enableHighAccuracy: true, watch: true}).on 'locationfound', (e) =>
       if window.user_marker
         window.user_marker.moveTo([e.latitude, e.longitude], ANIMATION_TIME/2)
-        window.user_marker.bindPopup("You are within " + (e.accuracy / 2) + " meters from this point")
+        window.user_marker.bindPopup(gon.user_text)
       else
         window.user_marker = L.Marker.movingMarker([[e.latitude, e.longitude]],[],
           icon: L.ExtraMarkers.icon({
@@ -47,7 +47,7 @@ coffee:
             markerColor: 'cyan'
           }))
         window.user_marker.addTo(window.map).
-          bindPopup("You are within " + (e.accuracy / 2) + " meters from this point")
+          bindPopup(gon.user_text)
 
     user_tracking_interval = null
     L.easyButton(

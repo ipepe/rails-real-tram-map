@@ -5,6 +5,7 @@ class Api::V1::TramsController < ApplicationController
     p = sanitize_index_params
     @trams = Tram.currently_running(p).to_a
     gon.trams = @trams.map(&:serialized_hash)
+    gon.user_text = I18n.t('user.your_position')
     respond_to do |format|
       format.html
       format.json { render json: {result: @trams.map(&:serialized_hash)} }

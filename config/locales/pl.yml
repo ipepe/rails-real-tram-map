@@ -5,3 +5,5 @@ pl:
     timeline: Rozkład jazdy
     line: Linia
     brigade: Brygada
+  user:
+    your_position: Twoja pozycja
