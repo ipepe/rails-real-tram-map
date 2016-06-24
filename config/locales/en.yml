@@ -8,5 +8,13 @@ en:
   user:
     your_position: Your position
   about:
-    title: About
+    title: About project
     subtitle: 'List of used frameworks, libraries and other resources. Heres my thank You to:'
+    why:
+      dane_po_warszawsku: API Interface Provider
+      ztm: API Data Provider
+      leaflet: Map Control library
+      open_street_map: Map data (roads, coordinates, POIs)
+      carto_db: Map Style and Render
+      tobiasahlin: Spinnder Author
+      font_awesome: Icons provider

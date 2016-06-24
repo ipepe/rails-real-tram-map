@@ -6,4 +6,15 @@ pl:
     line: Linia
     brigade: Brygada
   user:
-    your_position: Twoja pozycja
+    your_position: Your position
+  about:
+    title: O projekcie
+    subtitle: 'Lista frameworków, bibliotek oraz innych zasobów. To jest moje podziękowanie dla:'
+    why:
+      dane_po_warszawsku: Dostawca interfejsu API
+      ztm: Dostawca danych do API
+      leaflet: Kontrolka mapy
+      open_street_map: Dane mapy (drogi, koordynaty, Punkty Zainteresowań)
+      carto_db: Grafika i styl Mapy oraz render
+      tobiasahlin: Autor grafiki 'Spinner'
+      font_awesome: Dostawca ikon

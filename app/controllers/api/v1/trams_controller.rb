@@ -13,7 +13,15 @@ class Api::V1::TramsController < ApplicationController
   end
 
   def about
-    @services = [:dane_po_warzawsku, :ztm, :leaflet, :openstreetmap, :carto_db, :spinner, :fontawesome]
+    @services = {
+      dane_po_warszawsku: 'png',
+      ztm: 'jpg',
+      leaflet: 'png',
+      open_street_map: 'jpg',
+      carto_db: 'png',
+      tobiasahlin: 'jpg',
+      font_awesome:'png'
+    }
   end
 
   private

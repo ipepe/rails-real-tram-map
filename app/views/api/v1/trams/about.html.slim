@@ -12,9 +12,9 @@
             th Logo
             th Why
         tbody
-          - @services.each do |service|
+          - @services.each do |service, img_filetype|
             tr
               td = service.to_s.humanize
               td
-                img src="/logos/#{service}.png"
+                img.img-responsive src="/logos/#{service}.#{img_filetype}"
               td = I18n.t("about.why.#{service}")
