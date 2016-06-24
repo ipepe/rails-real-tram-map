@@ -12,7 +12,7 @@ en:
     subtitle: 'List of used frameworks, libraries and other resources. Heres my thank You to:'
     why:
       dane_po_warszawsku: API Interface Provider
-      ztm: API Data Provider
+      zarzad_transportu_miejskiego: API Data Provider
       leaflet: Map Control library
       open_street_map: Map data (roads, coordinates, POIs)
       carto_db: Map Style and Render

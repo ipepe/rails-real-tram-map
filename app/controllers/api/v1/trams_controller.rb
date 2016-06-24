@@ -15,7 +15,7 @@ class Api::V1::TramsController < ApplicationController
   def about
     @services = {
       dane_po_warszawsku: 'png',
-      ztm: 'jpg',
+      zarzad_transportu_miejskiego: 'jpg',
       leaflet: 'png',
       open_street_map: 'jpg',
       carto_db: 'png',
