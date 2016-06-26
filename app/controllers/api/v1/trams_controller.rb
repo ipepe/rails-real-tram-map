@@ -20,7 +20,8 @@ class Api::V1::TramsController < ApplicationController
       open_street_map: 'jpg',
       carto_db: 'png',
       tobiasahlin: 'jpg',
-      font_awesome:'png'
+      font_awesome:'png',
+      pjatk: 'png'
     }
   end
 
