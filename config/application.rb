@@ -22,5 +22,18 @@ module RealTramMap
     def scheduler
       @scheduler ||= Rufus::Scheduler.new
     end
+
+    def db_safely
+      begin
+        unless ActiveRecord::Base.connected?
+          ActiveRecord::Base.connection.verify!(0)
+        end
+        yield
+      rescue => e
+        status e.inspect
+      ensure
+        ActiveRecord::Base.connection_pool.release_connection
+      end
+    end
   end
 end
